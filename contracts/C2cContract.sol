@@ -10,6 +10,7 @@ import "hardhat/console.sol";
 /// @dev Buyer is the one creating this contract and will send the money to the seller. While deploying the contract,
 /// buyer will send the price amount in msg.value. Now the contract will hold the amount. Later the seller can withdraw
 /// the funds using the withdrawFunds function. Only seller can withdraw the funds.
+/// Time is stored as uint64 coz im using unix timestamp.
 
 contract C2cContract {
     address payable private buyer;
@@ -63,12 +64,16 @@ contract C2cContract {
         return endDate;
     }
 
+    function isFundsWithdrawed() public view onlySellerOrBuyer returns (bool) {
+        return withdrawed;
+    }
+
     function withdrawFunds() public payable notYetWithdrawed onlySeller {
         console.log(msg.sender);
         (bool callSuccess, ) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        require(callSuccess, "Call failed");
+        require(callSuccess, "Withdraw failed");
         withdrawed = true;
     }
 
