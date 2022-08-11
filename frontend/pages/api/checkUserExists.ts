@@ -21,8 +21,12 @@ export default async function handler(
     const match = (result?.users as string[]).find(
       (value) => value === req.body.phone
     );
+    await db.disconnect();
+
     res.status(200).json({ userExists: match ? true : false, success: true });
   } catch (error) {
+    await db.disconnect();
+
     res.status(200).json({ success: false });
   }
 }

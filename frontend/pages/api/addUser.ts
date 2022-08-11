@@ -25,8 +25,10 @@ export default async function handler(
 
   try {
     await db.json.arrAppend('users', '.users', req.body.phone);
+    await db.disconnect();
     res.status(200).json({ success: true });
   } catch (error) {
+    await db.disconnect();
     res.status(200).json({ success: false });
   }
 }
