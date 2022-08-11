@@ -37,7 +37,7 @@ const HomePage: NextPage<IndexProps> = (props) => {
           bgGradient={'linear(to-r, teal.500, green.500)'}
           mb={6}
         >
-          Create a C2C contract as seller
+          List your product
         </Button>
 
         <Button
@@ -45,7 +45,7 @@ const HomePage: NextPage<IndexProps> = (props) => {
           bgGradient={'linear(to-r, teal.500, green.500)'}
           mb={6}
         >
-          Create a C2C contract as buyer
+          Buy a product from the seller
         </Button>
 
         <Button color='white' bgGradient={'linear(to-r, teal.500, green.500)'}>
@@ -53,13 +53,19 @@ const HomePage: NextPage<IndexProps> = (props) => {
         </Button>
 
         <Text mt={6} fontSize='sm'>
-          You can create a contract as a seller and a buyer
+          When you buy a product from the seller, a contract
         </Text>
+        <Text fontSize='sm'>will be created.</Text>
 
         <Text mt={3} fontSize='sm'>
           See all your C2C contracts in the See your contracts
         </Text>
-        <Text fontSize='sm'>Both the buyer and seller contract is there.</Text>
+        <Text mt={3} fontSize='sm'>
+          You can list your products. This is feature does
+        </Text>
+        <Text fontSize='sm'>
+          not interact with blockchain. Stored in our DB.
+        </Text>
       </Flex>
     </Flex>
   );
