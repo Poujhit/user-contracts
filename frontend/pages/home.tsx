@@ -12,10 +12,13 @@ import {
   InputLeftAddon,
   Text,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 interface IndexProps {}
 
-const HomePage: NextPage<IndexProps> = (props) => {
+const HomePage: NextPage<IndexProps> = () => {
+  const router = useRouter();
+
   return (
     <Flex
       height='100vh'
@@ -34,22 +37,60 @@ const HomePage: NextPage<IndexProps> = (props) => {
 
         <Button
           color='white'
+          colorScheme='teal'
           bgGradient={'linear(to-r, teal.500, green.500)'}
           mb={6}
+          onClick={() => {
+            router.push('/list-product');
+          }}
         >
           List your product
         </Button>
 
         <Button
           color='white'
+          colorScheme='teal'
           bgGradient={'linear(to-r, teal.500, green.500)'}
           mb={6}
+          onClick={() => {
+            router.push('/buy-product');
+          }}
         >
           Buy a product from the seller
         </Button>
 
-        <Button color='white' bgGradient={'linear(to-r, teal.500, green.500)'}>
+        <Button
+          color='white'
+          colorScheme='teal'
+          mb={6}
+          bgGradient={'linear(to-r, teal.500, green.500)'}
+          onClick={() => {
+            router.push('/see-contracts');
+          }}
+        >
           See your contracts
+        </Button>
+        <Button
+          color='white'
+          colorScheme='teal'
+          mb={6}
+          bgGradient={'linear(to-r, teal.500, green.500)'}
+          onClick={() => {
+            router.push('/withdraw-money');
+          }}
+        >
+          Withdraw money from contracts
+        </Button>
+
+        <Button
+          color='white'
+          colorScheme='teal'
+          bgGradient={'linear(to-r, teal.500, green.500)'}
+          onClick={() => {
+            router.push('/my-wallet');
+          }}
+        >
+          My Wallet
         </Button>
 
         <Text mt={6} fontSize='sm'>
@@ -65,6 +106,10 @@ const HomePage: NextPage<IndexProps> = (props) => {
         </Text>
         <Text fontSize='sm'>
           not interact with blockchain. Stored in our DB.
+        </Text>
+
+        <Text mt={3} fontSize='sm'>
+          Sellers can withdraw money from Withdraw money from contracts
         </Text>
       </Flex>
     </Flex>
