@@ -25,9 +25,9 @@ async function main() {
 
   await contract.deployed();
 
-  // const buyer = await contract.getBuyer();
+  const buyer = await contract.getBuyer();
 
-  // console.log(buyer);
+  console.log(buyer);
 
   // const endDate = await contract.getEndDate();
   // console.log(parseInt(endDate.toString()));
