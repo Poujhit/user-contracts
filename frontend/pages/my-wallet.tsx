@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useState } from 'react';
+import { ethers } from 'ethers';
 
 import {
   Button,
@@ -13,9 +14,37 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+function truncate(str: string, maxDecimalDigits: number) {
+  if (str.includes('.')) {
+    const parts = str.split('.');
+    return parts[0] + '.' + parts[1].slice(0, maxDecimalDigits);
+  }
+  return str;
+}
+
 interface IndexProps {}
 
 const MyWalletPage: NextPage<IndexProps> = () => {
+  const [walletData, setWalletData] = useState<Record<string, string>>({});
+  console.log(walletData);
+
+  useEffect(() => {
+    async function getWalletData() {
+      let data = window.localStorage.getItem('wallet') as any;
+      data = JSON.parse(data);
+      console.log(data);
+      const provider = ethers.getDefaultProvider('kovan');
+      const walletWithProvider = new ethers.Wallet(data.privateKey, provider);
+      const balance = await walletWithProvider.getBalance();
+      setWalletData({
+        address: walletWithProvider.address,
+        balance: balance.toString(),
+      });
+    }
+
+    getWalletData();
+  }, []);
+
   return (
     <Flex
       height='100vh'
@@ -31,6 +60,20 @@ const MyWalletPage: NextPage<IndexProps> = () => {
         alignItems='center'
       >
         <Heading mb={6}>My Wallet</Heading>
+
+        <Text>
+          {' '}
+          Address: {walletData?.address
+            ? walletData?.address
+            : 'Loading....'}{' '}
+        </Text>
+        <Text mt={3}>
+          {' '}
+          Balance:{' '}
+          {walletData?.balance
+            ? truncate(ethers.utils.formatEther(walletData?.balance), 4)
+            : 'Loading....'}
+        </Text>
       </Flex>
     </Flex>
   );
