@@ -67,8 +67,9 @@ const Home: NextPage = () => {
               window.localStorage.setItem(
                 'wallet',
                 JSON.stringify({
-                  publickey: wallet.address,
+                  publickey: wallet.publicKey,
                   privateKey: wallet.privateKey,
+                  address: wallet.address,
                   mnemonic: wallet.mnemonic.phrase,
                 })
               );
