@@ -15,11 +15,11 @@ export default async function handler(
 
   await db.connect();
 
-  const result = db.json.get('products');
+  const result = await db.json.get('products');
 
   if (!result) {
     await db.json.set('products', '$', {
-      allProducts: req.body,
+      allProducts: [req.body],
     });
   } else {
     await db.json.arrAppend('products', '.allProducts', req.body);
