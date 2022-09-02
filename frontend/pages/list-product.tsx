@@ -34,9 +34,8 @@ const HomePage: NextPage<IndexProps> = () => {
           initialValues={{ name: '', price: '', startDate: '', endDate: '' }}
           onSubmit={async (value) => {
             console.log(value);
-            const walletData = JSON.parse(
-              window.localStorage.getItem('wallet')!
-            );
+            const phone = window.localStorage.getItem('phone') as string;
+            const walletData = JSON.parse(window.localStorage.getItem(phone)!);
             const response = await addProduct({
               seller: walletData.address,
               ...value,

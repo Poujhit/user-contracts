@@ -30,7 +30,8 @@ const MyWalletPage: NextPage<IndexProps> = () => {
 
   useEffect(() => {
     async function getWalletData() {
-      let data = window.localStorage.getItem('wallet') as any;
+      const phone: string = window.localStorage.getItem('phone')!;
+      let data = window.localStorage.getItem(phone) as any;
       data = JSON.parse(data);
       console.log(data);
       const provider = ethers.getDefaultProvider('kovan');

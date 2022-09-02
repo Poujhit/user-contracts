@@ -64,8 +64,9 @@ const Home: NextPage = () => {
             if (!(await isUserExists(phone))) {
               await callAddUser(phone);
               const wallet = ethers.Wallet.createRandom();
+              window.localStorage.setItem('phone', phone);
               window.localStorage.setItem(
-                'wallet',
+                phone,
                 JSON.stringify({
                   publickey: wallet.publicKey,
                   privateKey: wallet.privateKey,
