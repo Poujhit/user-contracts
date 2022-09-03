@@ -38,6 +38,7 @@ const HomePage: NextPage<IndexProps> = () => {
             const walletData = JSON.parse(window.localStorage.getItem(phone)!);
             const response = await addProduct({
               seller: walletData.address,
+              sellerPhone: phone,
               ...value,
             });
 
@@ -97,6 +98,9 @@ const HomePage: NextPage<IndexProps> = () => {
         </Formik>
         <Text mt={6} fontSize='sm'>
           No validation is done, So pls enter all values
+        </Text>
+        <Text fontSize='sm'>
+          Product name should not be greater that 31 letters
         </Text>
       </Flex>
     </Flex>
