@@ -34,7 +34,7 @@ const MyWalletPage: NextPage<IndexProps> = () => {
       let data = window.localStorage.getItem(phone) as any;
       data = JSON.parse(data);
       console.log(data);
-      const provider = ethers.getDefaultProvider('kovan');
+      const provider = ethers.getDefaultProvider('goerli');
       const walletWithProvider = new ethers.Wallet(data.privateKey, provider);
       const balance = await walletWithProvider.getBalance();
       setWalletData({
