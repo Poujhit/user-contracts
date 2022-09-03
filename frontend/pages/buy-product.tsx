@@ -13,6 +13,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import { ethers } from 'ethers';
+import { contractDetails } from 'utils/contract';
 
 interface IndexProps {}
 
@@ -38,24 +40,70 @@ const BuyProduct: NextPage<IndexProps> = () => {
       {loading ? (
         <Text mt={40}>Loading...</Text>
       ) : (
-        data.map((prod, index) => (
+        data.map((prod: Record<string, any>, index) => (
           <Flex
             key={index}
             direction='column'
             background='gray.100'
             p={12}
             mt={16}
+            width={'80%'}
             rounded={6}
             alignItems='center'
+            justifyContent={'center'}
           >
-            <pre>{JSON.stringify(prod)}</pre>
+            <p>{JSON.stringify(prod)}</p>
             <Button
               color='white'
               colorScheme='teal'
               mt={6}
               bgGradient={'linear(to-r, teal.500, green.500)'}
-              onClick={() => {
-                // router.push('/see-contracts');
+              onClick={async () => {
+                const phone = localStorage.getItem('phone')!;
+                const walletData = JSON.parse(
+                  localStorage.getItem(phone)!
+                ) as Record<string, any>;
+
+                if (prod.seller === walletData.address) {
+                  return;
+                }
+
+                const provider = ethers.getDefaultProvider('goerli');
+                const account = new ethers.Wallet(
+                  walletData.privateKey,
+                  provider
+                );
+
+                const contract = new ethers.ContractFactory(
+                  contractDetails.abi,
+                  contractDetails.bytecode,
+                  account
+                );
+
+                const deployedContract = await contract.deploy(
+                  prod.seller,
+                  ethers.utils.parseEther(prod.price.toString()),
+                  Math.floor(new Date(prod.startDate).getTime() / 1000),
+                  Math.floor(new Date(prod.endDate).getTime() / 1000),
+                  ethers.utils.formatBytes32String(prod.name),
+                  { value: ethers.utils.parseEther(prod.price.toString()) }
+                );
+
+                console.log(deployedContract.address);
+
+                const response = await axios.post('/api/buyProduct', {
+                  phone: phone,
+                  contractAddress: deployedContract.address,
+                });
+                console.log(response);
+
+                const response1 = await axios.post('/api/addToWithdraw', {
+                  phone: prod.sellerPhone,
+                  contractAddress: deployedContract.address,
+                });
+                console.log(response1);
+
+                console.log('done!!');
               }}
             >
               Buy
