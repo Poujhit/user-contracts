@@ -20,12 +20,16 @@ async function main() {
     amount,
     Math.floor(new Date().getTime() / 1000),
     Math.floor(new Date('2022.12.01').getTime() / 1000),
+    ethers.utils.formatBytes32String('Mutton'),
     { value: amount }
   );
 
   await contract.deployed();
 
   const buyer = await contract.getBuyer();
+  const name = await contract.getProdName();
+
+  console.log(ethers.utils.parseBytes32String(name));
 
   console.log(buyer);
 

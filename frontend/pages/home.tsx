@@ -68,7 +68,7 @@ const HomePage: NextPage<IndexProps> = () => {
             router.push('/see-contracts');
           }}
         >
-          See your contracts
+          See your contracts (my orders)
         </Button>
         <Button
           color='white'
@@ -110,6 +110,10 @@ const HomePage: NextPage<IndexProps> = () => {
 
         <Text mt={3} fontSize='sm'>
           Sellers can withdraw money from Withdraw money from contracts
+        </Text>
+        <Text fontSize='sm'>
+          When a buyer buys a product, it&apos;s seller can view them here and
+          withdraw.
         </Text>
       </Flex>
     </Flex>

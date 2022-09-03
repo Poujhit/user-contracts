@@ -11,6 +11,8 @@ import "hardhat/console.sol";
 /// buyer will send the price amount in msg.value. Now the contract will hold the amount. Later the seller can withdraw
 /// the funds using the withdrawFunds function. Only seller can withdraw the funds.
 /// Time is stored as uint64 coz im using unix timestamp.
+/// prodName is stored as bytes32 so in frontend convert it to bytes32 string using this https://docs.ethers.io/v5/api/utils/strings/#utils-parseBytes32
+/// Decode it using this https://docs.ethers.io/v5/api/utils/strings/#utils-parseBytes32
 
 contract C2cContract {
     address payable private buyer;
@@ -18,6 +20,7 @@ contract C2cContract {
     uint256 private price;
     uint64 private startDate;
     uint64 private endDate;
+    bytes32 private prodName;
 
     bool private withdrawed;
 
@@ -28,7 +31,8 @@ contract C2cContract {
         address payable sellerAddress,
         uint256 priceOfGoods,
         uint64 date1,
-        uint64 date2
+        uint64 date2,
+        bytes32 productName
     ) payable {
         seller = sellerAddress;
         // when deploying the contract, owner is the buyer and msg.sender will have the owner address only
@@ -37,6 +41,7 @@ contract C2cContract {
         startDate = date1;
         endDate = date2;
         withdrawed = false;
+        prodName = productName;
     }
 
     function getBuyer()
@@ -62,6 +67,10 @@ contract C2cContract {
 
     function getEndDate() public view onlySellerOrBuyer returns (uint64) {
         return endDate;
+    }
+
+    function getProdName() public view onlySellerOrBuyer returns (bytes32) {
+        return prodName;
     }
 
     function isFundsWithdrawed() public view onlySellerOrBuyer returns (bool) {
