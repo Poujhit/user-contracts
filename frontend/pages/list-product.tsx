@@ -69,7 +69,7 @@ const HomePage: NextPage<IndexProps> = () => {
                     <FormLabel>Start Date</FormLabel>
                     <Input {...field} borderColor={'grey'} />
                     <FormHelperText>
-                      Enter start date as a YYYY-MM-DD
+                      Enter start date as a YYYY.MM.DD
                     </FormHelperText>
                   </FormControl>
                 )}
@@ -80,7 +80,7 @@ const HomePage: NextPage<IndexProps> = () => {
                     <FormLabel>Price</FormLabel>
                     <Input {...field} borderColor={'grey'} />
                     <FormHelperText>
-                      Enter end date as a YYYY-MM-DD
+                      Enter end date as a YYYY.MM.DD
                     </FormHelperText>
                   </FormControl>
                 )}
