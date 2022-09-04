@@ -64,7 +64,6 @@ const Home: NextPage = () => {
             if (!(await isUserExists(phone))) {
               await callAddUser(phone);
               const wallet = ethers.Wallet.createRandom();
-              window.localStorage.setItem('phone', phone);
               window.localStorage.setItem(
                 phone,
                 JSON.stringify({
@@ -75,6 +74,7 @@ const Home: NextPage = () => {
                 })
               );
             }
+            window.localStorage.setItem('phone', phone);
 
             router.replace('/home');
           }}
