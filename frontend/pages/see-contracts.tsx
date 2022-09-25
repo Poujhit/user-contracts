@@ -15,6 +15,7 @@ import {
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { contractDetails } from 'utils/contract';
+import { provider } from 'utils/provider';
 
 interface IndexProps {}
 
@@ -33,7 +34,7 @@ const SeeContracts: NextPage<IndexProps> = () => {
           phone: window.localStorage.getItem('phone'),
         })
       ).data.orders;
-      const provider = ethers.getDefaultProvider('goerli');
+
       const account = new ethers.Wallet(
         JSON.parse(
           window.localStorage.getItem(window.localStorage.getItem('phone')!)!

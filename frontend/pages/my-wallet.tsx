@@ -13,6 +13,7 @@ import {
   InputLeftAddon,
   Text,
 } from '@chakra-ui/react';
+import { provider } from 'utils/provider';
 
 function truncate(str: string, maxDecimalDigits: number) {
   if (str.includes('.')) {
@@ -34,7 +35,7 @@ const MyWalletPage: NextPage<IndexProps> = () => {
       let data = window.localStorage.getItem(phone) as any;
       data = JSON.parse(data);
       console.log(data);
-      const provider = ethers.getDefaultProvider('goerli');
+
       const walletWithProvider = new ethers.Wallet(data.privateKey, provider);
       const balance = await walletWithProvider.getBalance();
       setWalletData({

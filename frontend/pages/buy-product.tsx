@@ -11,15 +11,18 @@ import {
   InputGroup,
   InputLeftAddon,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { contractDetails } from 'utils/contract';
+import { provider } from 'utils/provider';
 
 interface IndexProps {}
 
 const BuyProduct: NextPage<IndexProps> = () => {
   const [data, setData] = useState([]);
+  const toast = useToast();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -47,7 +50,6 @@ const BuyProduct: NextPage<IndexProps> = () => {
             background='gray.100'
             p={12}
             mt={16}
-            width={'80%'}
             rounded={6}
             alignItems='center'
             justifyContent={'center'}
@@ -65,10 +67,15 @@ const BuyProduct: NextPage<IndexProps> = () => {
                 ) as Record<string, any>;
 
                 if (prod.seller === walletData.address) {
+                  toast({
+                    title: 'Error',
+                    description: 'You cannot buy from yourself.',
+                    status: 'error',
+                    duration: 2000,
+                  });
                   return;
                 }
 
-                const provider = ethers.getDefaultProvider('goerli');
                 const account = new ethers.Wallet(
                   walletData.privateKey,
                   provider
