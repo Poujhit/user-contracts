@@ -18,7 +18,8 @@
     "framer-motion": "^6.5.1",
     "next": "12.2.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-loading-overlay-ts": "^2.0.0"
   },
   "devDependencies": {
     "@redis/json": "^1.0.3",

@@ -96,11 +96,11 @@ const SeeContracts: NextPage<IndexProps> = () => {
                 );
 
                 contractData['endDate'] = new Date(
-                  parseInt(await contract.getEndDate())
+                  parseInt(await contract.getEndDate()) * 1000
                 ).toUTCString();
 
                 contractData['startDate'] = new Date(
-                  parseInt(await contract.getStartDate())
+                  parseInt(await contract.getStartDate()) * 1000
                 ).toUTCString();
 
                 contractData['price'] = `${ethers.utils.formatEther(
@@ -109,6 +109,7 @@ const SeeContracts: NextPage<IndexProps> = () => {
 
                 const updatingValue = [...blockchainData];
                 updatingValue.splice(index, 0, contractData);
+                console.log(updatingValue);
 
                 setBlockchainData(updatingValue);
               }}

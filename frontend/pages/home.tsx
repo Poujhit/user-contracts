@@ -1,17 +1,7 @@
 import { NextPage } from 'next';
 import React from 'react';
 
-import { useState } from 'react';
-
-import {
-  Button,
-  Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  Text,
-} from '@chakra-ui/react';
+import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 interface IndexProps {}
