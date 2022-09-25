@@ -11,16 +11,20 @@ import {
   InputGroup,
   InputLeftAddon,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { contractDetails } from 'utils/contract';
+import { provider } from 'utils/provider';
 
 interface IndexProps {}
 
 const WithdrawMoney: NextPage<IndexProps> = () => {
+  const toast = useToast();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadedContract, setLoadedContract] = useState<ethers.Contract>();
   const [blockchainData, setBlockchainData] = useState<Record<string, any>[]>(
     []
   );
@@ -33,7 +37,7 @@ const WithdrawMoney: NextPage<IndexProps> = () => {
           phone: window.localStorage.getItem('phone'),
         })
       ).data.orders;
-      const provider = ethers.getDefaultProvider('goerli');
+
       const account = new ethers.Wallet(
         JSON.parse(
           window.localStorage.getItem(window.localStorage.getItem('phone')!)!
@@ -83,7 +87,13 @@ const WithdrawMoney: NextPage<IndexProps> = () => {
               mt={6}
               disabled={blockchainData[index]?.isWithdrawed ?? true}
               bgGradient={'linear(to-r, teal.500, green.500)'}
-              onClick={async () => {}}
+              onClick={async () => {
+                await loadedContract?.withdrawFunds();
+                toast({
+                  title: 'Done',
+                });
+                window.location.reload();
+              }}
             >
               Withdraw
             </Button>
@@ -98,6 +108,7 @@ const WithdrawMoney: NextPage<IndexProps> = () => {
                   contractDetails.abi,
                   account
                 );
+                setLoadedContract(contract);
                 let contractData: Record<string, any> = {};
                 contractData['buyer'] = await contract.getBuyer();
                 contractData['seller'] = await contract.getSeller();
