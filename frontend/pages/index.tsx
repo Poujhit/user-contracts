@@ -175,6 +175,26 @@ const AuthScreen: NextPage = () => {
                 address: '',
                 mnemonic: '',
               }}
+              validate={(value) => {
+                const error: Record<string, any> = {};
+                if (value.address.length === 0) {
+                  error.address = 'error';
+                }
+                if (value.mnemonic.length === 0) {
+                  error.mnemonic = 'error';
+                }
+                if (value.privateKey.length === 0) {
+                  error.privateKey = 'error';
+                }
+                if (value.publickey.length === 0) {
+                  error.publickey = 'error';
+                }
+                if (value.phone.length === 0) {
+                  error.phone = 'error';
+                }
+
+                return error;
+              }}
               onSubmit={async ({ phone, ...otherValues }) => {
                 window.localStorage.setItem(phone, JSON.stringify(otherValues));
                 onClose();
