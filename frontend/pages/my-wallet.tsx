@@ -14,6 +14,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { provider } from 'utils/provider';
+import { useRouter } from 'next/router';
 
 function truncate(str: string, maxDecimalDigits: number) {
   if (str.includes('.')) {
@@ -28,6 +29,13 @@ interface IndexProps {}
 const MyWalletPage: NextPage<IndexProps> = () => {
   const [walletData, setWalletData] = useState<Record<string, string>>({});
   console.log(walletData);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('phone')) {
+      router.replace('/');
+    }
+  }, [router]);
 
   useEffect(() => {
     async function getWalletData() {

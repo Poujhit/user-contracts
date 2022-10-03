@@ -9,6 +9,7 @@ import { ethers } from 'ethers';
 import { contractDetails } from 'utils/contract';
 import { provider } from 'utils/provider';
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { useRouter } from 'next/router';
 
 interface IndexProps {}
 
@@ -21,6 +22,14 @@ const BuyProduct: NextPage<IndexProps> = () => {
   const handleButtonClicked = useCallback(() => {
     setActive((value) => !value);
   }, []);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('phone')) {
+      router.replace('/');
+    }
+  }, [router]);
 
   useEffect(() => {
     async function getData() {
@@ -72,6 +81,7 @@ const BuyProduct: NextPage<IndexProps> = () => {
                       status: 'error',
                       duration: 2000,
                     });
+                    handleButtonClicked();
                     return;
                   }
 

@@ -6,6 +6,7 @@ import { FormControl, FormLabel, FormHelperText } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
 import axios from 'axios';
 import LoadingOverlayWrapper from 'react-loading-overlay-ts';
+import { useRouter } from 'next/router';
 
 interface IndexProps {}
 
@@ -20,6 +21,14 @@ const HomePage: NextPage<IndexProps> = () => {
   const handleButtonClicked = useCallback(() => {
     setActive((value) => !value);
   }, []);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('phone')) {
+      router.replace('/');
+    }
+  }, [router]);
 
   return (
     <LoadingOverlayWrapper active={isActive} spinner text='Loading...'>
