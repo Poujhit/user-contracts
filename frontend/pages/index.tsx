@@ -112,10 +112,11 @@ const AuthScreen: NextPage = () => {
                 window.localStorage.setItem('phone', phone);
                 router.replace('/home');
               } else {
+                handleButtonClicked();
                 toast({
                   title: 'No wallet found',
                   description:
-                    'This phone number is registered with our service but the wallet is not found in this broweser. Import the wallet to use your account',
+                    'This phone number is registered with our service but the wallet is not found in this browser. Import the wallet to use your account',
                   status: 'error',
                   duration: 9000,
                   isClosable: true,
