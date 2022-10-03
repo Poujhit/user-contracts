@@ -49,6 +49,23 @@ const HomePage: NextPage<IndexProps> = () => {
 
           <Formik
             initialValues={{ name: '', price: '', startDate: '', endDate: '' }}
+            validate={(value) => {
+              const error: Record<string, any> = {};
+              if (value.name.length === 0) {
+                error.name = 'error';
+              }
+              if (value.price.length === 0) {
+                error.price = 'error';
+              }
+              if (value.startDate.length === 0) {
+                error.startDate = 'error';
+              }
+              if (value.endDate.length === 0) {
+                error.endDate = 'error';
+              }
+
+              return error;
+            }}
             onSubmit={async (value, { resetForm }) => {
               handleButtonClicked();
               console.log(value);
